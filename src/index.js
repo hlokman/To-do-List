@@ -24,17 +24,18 @@ const formTask = document.querySelector('#formTask');
 const formFolder = document.querySelector('#formFolder');
 const checkBtn = document.querySelector('.checkBtn');
 const test = document.querySelector('.test');
+const formEdit = document.querySelector('#formEdit');
 //Form placeholder
-const formTitle = document.querySelector('#title');
-const formDescription = document.querySelector('#description');
-const formDate = document.querySelector('#dueDate');
-const formPriority = document.querySelector('#priority');
+const titleEdit = document.querySelector('#titleEdit');
+const descriptionEdit = document.querySelector('#descriptionEdit');
+const dateEdit = document.querySelector('#dueDateEdit');
+const priorityEdit = document.querySelector('#priorityEdit');
 
 
 
 //--FACTORY FUNCTION
-const toDoFactory = (title, description, dueDate, priority, check, folderName) => {
-    return {title, description, dueDate, priority, check, folderName}
+const toDoFactory = (title, description, dueDate, priority, check /*, folderName*/) => {
+    return {title, description, dueDate, priority, check,/* folderName*/}
 };
 
 let folders = [[{folderName: 'folder1'},{title: 'make dinner', description: 'To make dinner at 19pm', dueDate: '2023-09-12', priority: 'Medium', check: 'Not Done'},
@@ -108,20 +109,20 @@ const displayController = (() => {
         }
 
         if (e.target.id == 'edit') {
-            //MAYBE MAKE A DIFFERENT FORM THE TASK'S ONE APPEAR TO AVOID ADDING AN ELEMENT WHILE EDITING (WITH DIFFERENT SUBMIT LOGIC)
+            //MAYBE MAKE A DIFFERENT FORM THE TASK'S ONE APPEAR TO AVOID ADDING AN ELEMENT WHILE EDITING (WITH DIFFERENT SUBMIT LOGIC) (ONGOING)
             console.log('edit trigger');
             console.log(e.target.parentNode.dataset.indexNumber);
-            formTitle.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].title}`);
-            formDescription.innerHTML = `${activeFolder[e.target.parentNode.dataset.indexNumber].description}`;
-            formDate.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].dueDate}`);
+            titleEdit.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].title}`);
+            descriptionEdit.innerHTML = `${activeFolder[e.target.parentNode.dataset.indexNumber].description}`;
+            dateEdit.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].dueDate}`);
             //formPriority.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].priority}`);
             //!!! MAKE SURE TO ERASE ATTRIBUTES AND PUT EVERYTHING BACK TO PREVIOUS STATE BECAUSE WE CHANGE THE ATTRIBUTES OR INNERHTML
             if (activeFolder[e.target.parentNode.dataset.indexNumber].priority == 'Low') {
-                formPriority.innerHTML='<option value="high">High</option><option value="medium">Medium</option><option value="low" selected>Low</option>';
+                priorityEdit.innerHTML='<option value="high">High</option><option value="medium">Medium</option><option value="low" selected>Low</option>';
             } else if (activeFolder[e.target.parentNode.dataset.indexNumber].priority == 'Medium') {
-                formPriority.innerHTML='<option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option>';
+                priorityEdit.innerHTML='<option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option>';
             } else if (activeFolder[e.target.parentNode.dataset.indexNumber].priority == 'High') {
-                formPriority.innerHTML='<option value="high" selected>High</option><option value="medium">Medium</option><option value="low">Low</option>';
+                priorityEdit.innerHTML='<option value="high" selected>High</option><option value="medium">Medium</option><option value="low">Low</option>';
             }
         }
 
@@ -161,7 +162,7 @@ const displayController = (() => {
     formTask.addEventListener('submit', (e) => {
         e.preventDefault();
         //console.log(e.currentTarget.title.value);
-        const newTask = toDoFactory((e.currentTarget.title.value), (e.currentTarget.description.value), (e.currentTarget.dueDate.value), (e.currentTarget.priority.value), 'Not Done', undefined);
+        const newTask = toDoFactory((e.currentTarget.title.value), (e.currentTarget.description.value), (e.currentTarget.dueDate.value), (e.currentTarget.priority.value), 'Not Done'/*, undefined*/);
         activeFolder.push(newTask);
         folderContent.innerHTML='';
         screenUpdate();
