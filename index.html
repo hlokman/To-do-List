@@ -64,6 +64,26 @@
                 </div>
                 -->
             </div>
+            
+            <form action="" method="" id="formEdit">
+                <label for="titleEdit">Title</label>
+                <input type="text" name="titleEdit" id="titleEdit" required maxlength="20">
+
+                <label for="descriptionEdit">Description</label>
+                <textarea name="descriptionEdit" id="descriptionEdit" cols="30" rows="10"></textarea>
+
+                <label for="dueDateEdit">Due date</label>
+                <input type="date" name="dueDateEdit" id="dueDateEdit">
+
+                <label for="priorityEdit">Priority</label>
+                <select name="priorityEdit" id="priorityEdit">
+                    <option value="high">High</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                </select>
+                <button type="submit" class="editTaskForm">Add</button>
+            </form>
+
 
             <form action="" method="" id="formTask">
                 <label for="title">Title</label>
