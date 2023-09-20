@@ -20,16 +20,20 @@ const folderContent = document.querySelector('.folderContent');
 const projects = document.querySelector('#projects');
 const addTask = document.querySelector('.addTask');
 const addFolder = document.querySelector('.addFolder');
-const formTask = document.querySelector('#formTask');
-const formFolder = document.querySelector('#formFolder');
+//const formTask = document.querySelector('#formTask');
+//const formFolder = document.querySelector('#formFolder');
 const checkBtn = document.querySelector('.checkBtn');
 const test = document.querySelector('.test');
-const formEdit = document.querySelector('#formEdit');
+//const formEdit = document.querySelector('#formEdit');
+const lists = document.querySelector('#lists');
+const inputs = document.querySelector('.inputs');
+
+
 //Form placeholder
-const titleEdit = document.querySelector('#titleEdit');
+/*const titleEdit = document.querySelector('#titleEdit');
 const descriptionEdit = document.querySelector('#descriptionEdit');
 const dateEdit = document.querySelector('#dueDateEdit');
-const priorityEdit = document.querySelector('#priorityEdit');
+const priorityEdit = document.querySelector('#priorityEdit');*/
 
 
 
@@ -81,9 +85,9 @@ const displayController = (() => {
         });
         folderContent.innerHTML += '<button class="addTask">Add</button>';
         console.log(activeFolder);
-
     };
     screenUpdate();
+    //const addTask = document.querySelector('.addTask');
 
     //------------eventListener to change the check status + remove trigger + edit trigger
     folderContent.addEventListener('click', (e) => {
@@ -102,28 +106,53 @@ const displayController = (() => {
         if (e.target.id == 'see') {
             console.log('see trigger');
             console.log(e.target.parentNode.dataset.indexNumber);
-            test.innerHTML = '';
-            test.innerHTML += `<div class="testInfo"><h3>Description:</h3><p>${activeFolder[e.target.parentNode.dataset.indexNumber].description}</p></div>` 
+            inputs.innerHTML = '';
+            inputs.innerHTML += `<div class="testInfo"><h3>Description:</h3><p>${activeFolder[e.target.parentNode.dataset.indexNumber].description}</p></div>` 
             + `<div class="testdueDate"><h3>dueDate:</h3><p>${activeFolder[e.target.parentNode.dataset.indexNumber].dueDate}</p></div>` 
             + `<div class="testpriority"><h3>Priority:</h3><p>${activeFolder[e.target.parentNode.dataset.indexNumber].priority}</p></div>`;
         }
 
         if (e.target.id == 'edit') {
-            //MAYBE MAKE A DIFFERENT FORM THE TASK'S ONE APPEAR TO AVOID ADDING AN ELEMENT WHILE EDITING (WITH DIFFERENT SUBMIT LOGIC) (ONGOING)
+            renderFormEdit();
+            const formEdit = document.querySelector('#formEdit'); //Scope logic + var cannot be created before the form being created
+            const titleEdit = document.querySelector('#titleEdit'); 
+            const descriptionEdit = document.querySelector('#descriptionEdit');
+            const dateEdit = document.querySelector('#dueDateEdit');
+            const priorityEdit = document.querySelector('#priorityEdit');
+            const statusEdit = document.querySelector('#statusEdit');
+  
             console.log('edit trigger');
             console.log(e.target.parentNode.dataset.indexNumber);
             titleEdit.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].title}`);
+            titleEdit.setAttribute('data-index-number', `${e.target.parentNode.dataset.indexNumber}`); //!! to make the right index available for the edit logic (Listener) below
             descriptionEdit.innerHTML = `${activeFolder[e.target.parentNode.dataset.indexNumber].description}`;
             dateEdit.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].dueDate}`);
             //formPriority.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].priority}`);
-            //!!! MAKE SURE TO ERASE ATTRIBUTES AND PUT EVERYTHING BACK TO PREVIOUS STATE BECAUSE WE CHANGE THE ATTRIBUTES OR INNERHTML
+            //!!! MAKE SURE TO ERASE ATTRIBUTES AND PUT EVERYTHING BACK TO PREVIOUS STATE BECAUSE WE CHANGE THE ATTRIBUTES OR INNERHTML (is that useful with a logic that quit page when clicked add button?)
             if (activeFolder[e.target.parentNode.dataset.indexNumber].priority == 'Low') {
                 priorityEdit.innerHTML='<option value="high">High</option><option value="medium">Medium</option><option value="low" selected>Low</option>';
             } else if (activeFolder[e.target.parentNode.dataset.indexNumber].priority == 'Medium') {
                 priorityEdit.innerHTML='<option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option>';
             } else if (activeFolder[e.target.parentNode.dataset.indexNumber].priority == 'High') {
                 priorityEdit.innerHTML='<option value="high" selected>High</option><option value="medium">Medium</option><option value="low">Low</option>';
-            }
+            };
+            //Same logic than the if above but with the status
+            if (activeFolder[e.target.parentNode.dataset.indexNumber].check == 'Done') {
+                statusEdit.innerHTML='<option value="Not Done">Not Done</option><option value="Done" selected>Done</option>';
+            } else if (activeFolder[e.target.parentNode.dataset.indexNumber].check == 'Not Done') {
+                statusEdit.innerHTML='<option value="Not Done" selected>Not Done</option><option value="Done">Done</option>';
+            };
+
+            //EDIT LOGIC
+            formEdit.addEventListener('submit', (e) => {
+                e.preventDefault();
+                //console.log(e.currentTarget.titleEdit.dataset.indexNumber)
+                const editTask = toDoFactory((e.currentTarget.titleEdit.value), (e.currentTarget.descriptionEdit.value), (e.currentTarget.dueDateEdit.value), (e.currentTarget.priorityEdit.value), (e.currentTarget.statusEdit.value));
+                activeFolder.splice((e.currentTarget.titleEdit.dataset.indexNumber), 1, editTask);
+                folderContent.innerHTML='';
+                screenUpdate();
+
+            })
         }
 
         if (e.target.id == 'remove') {
@@ -145,31 +174,67 @@ const displayController = (() => {
     });
 
     //----Folder's Form logic
-    formFolder.addEventListener('submit', (e) => {
-        e.preventDefault();
-        //console.log(e.currentTarget.folderName.value);
-        const newFolder = [{folderName: e.currentTarget.folderName.value}];
-        folders.push(newFolder);
-        projects.innerHTML += `<div class="${e.currentTarget.folderName.value}"> <button class="folderBtn" data-index-number="${folders.length - 1}">${e.currentTarget.folderName.value}</button> </div>`
-        console.log(activeFolder);
-
-
-
-    })
+    //formFolder.addEventListener('submit', (e) => {
+        //e.preventDefault();
+        ////console.log(e.currentTarget.folderName.value);
+        //const newFolder = [{folderName: e.currentTarget.folderName.value}];
+        //folders.push(newFolder);
+        //projects.innerHTML += `<div class="${e.currentTarget.folderName.value}"> <button class="folderBtn" data-index-number="${folders.length - 1}">${e.currentTarget.folderName.value}</button> </div>`
+        //console.log(activeFolder);
+    //})
 
     //------Task's Form logic
     //console.log(displayController.getActiveFolder())
-    formTask.addEventListener('submit', (e) => {
-        e.preventDefault();
+    //formTask.addEventListener('submit', (e) => {
+        //e.preventDefault();
         //console.log(e.currentTarget.title.value);
-        const newTask = toDoFactory((e.currentTarget.title.value), (e.currentTarget.description.value), (e.currentTarget.dueDate.value), (e.currentTarget.priority.value), 'Not Done'/*, undefined*/);
-        activeFolder.push(newTask);
-        folderContent.innerHTML='';
-        screenUpdate();
-        formTask.reset();
-    })
+        //const newTask = toDoFactory((e.currentTarget.title.value), (e.currentTarget.description.value), (e.currentTarget.dueDate.value), (e.currentTarget.priority.value), 'Not Done'/*, undefined*/);
+        //activeFolder.push(newTask);
+        //folderContent.innerHTML='';
+        //screenUpdate();
+        //formTask.reset();
+    //})
 
-    return {}
+    //return {}
+
+    //FOLDER LOGIC
+    lists.addEventListener('click', (e) => {
+        if (e.target.className == 'addFolder') {
+            renderFormFolder();
+            const formFolder = document.querySelector('#formFolder'); //Scope logic + var cannot be created before the form being created
+
+            //----Folder's Form logic
+            formFolder.addEventListener('submit', (e) => {
+                e.preventDefault();
+                //console.log(e.currentTarget.folderName.value);
+                const newFolder = [{folderName: e.currentTarget.folderName.value}];
+                folders.push(newFolder);
+                //Might include below code into screenUpdate or other function that create the DOM
+                projects.innerHTML += `<div class="${e.currentTarget.folderName.value}"> <button class="folderBtn" data-index-number="${folders.length - 1}">${e.currentTarget.folderName.value}</button> </div>`
+                console.log(activeFolder);
+            })
+        };
+    });
+
+
+    //TASK LOGIC (put it into folderContent Listener above?)
+    folderContent.addEventListener('click', (e) => {
+        if (e.target.className == 'addTask') {
+            renderFormTask();
+            const formTask = document.querySelector('#formTask'); //Scope logic + var cannot be created before the form being created
+
+            //------Task's Form logic
+            formTask.addEventListener('submit', (e) => {
+                e.preventDefault();
+                console.log(e.currentTarget.title.value);
+                const newTask = toDoFactory((e.currentTarget.title.value), (e.currentTarget.description.value), (e.currentTarget.dueDate.value), (e.currentTarget.priority.value), 'Not Done'/*, undefined*/);
+                activeFolder.push(newTask);
+                folderContent.innerHTML='';
+                screenUpdate();
+                formTask.reset();
+            })
+        }
+    })
 
 })()
 
@@ -181,6 +246,187 @@ const addElement = (() => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const renderFormEdit = () => {
+    const inputs = document.querySelector('.inputs');
+    inputs.innerHTML='';
+
+
+    const form = document.createElement('form');
+    form.setAttribute('action', '""');
+    form.setAttribute('post', '""');
+    form.setAttribute('id', 'formEdit');
+    inputs.appendChild(form);
+    //Title
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'titleEdit');
+    titleLabel.textContent='Title';
+    form.appendChild(titleLabel);
+    const titleInput = document.createElement('input');
+    titleInput.setAttribute('type', 'text');
+    titleInput.setAttribute('name', 'titleEdit');
+    titleInput.setAttribute('id', 'titleEdit');
+    titleInput.setAttribute('maxlength', '20');
+    titleInput.setAttribute('required', '');
+    form.appendChild(titleInput);
+    //Description
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.setAttribute('for', 'descriptionEdit');
+    descriptionLabel.textContent='Description';
+    form.appendChild(descriptionLabel);
+    const descriptionInput = document.createElement('textarea');
+    descriptionInput.setAttribute('name', 'descriptionEdit');
+    descriptionInput.setAttribute('id', 'descriptionEdit');
+    descriptionInput.setAttribute('cols', '30');
+    descriptionInput.setAttribute('rows', '10');
+    form.appendChild(descriptionInput);
+    //Due Date
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.setAttribute('for', 'dueDateEdit');
+    dueDateLabel.textContent='Due date';
+    form.appendChild(dueDateLabel);
+    const dueDateInput = document.createElement('input');
+    dueDateInput.setAttribute('type', 'date');
+    dueDateInput.setAttribute('name', 'dueDateEdit');
+    dueDateInput.setAttribute('id', 'dueDateEdit');
+    form.appendChild(dueDateInput);
+    //Priority
+    const priorityLabel = document.createElement('label');
+    priorityLabel.setAttribute('for', 'priorityEdit');
+    priorityLabel.textContent='Priority';
+    form.appendChild(priorityLabel);
+    const priorityInput = document.createElement('select');
+    priorityInput.setAttribute('name', 'priorityEdit');
+    priorityInput.setAttribute('id', 'priorityEdit');
+    form.appendChild(priorityInput);
+    priorityInput.innerHTML='<option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option>';
+    //Status
+    const statusLabel = document.createElement('label');
+    statusLabel.setAttribute('for', 'statusEdit');
+    statusLabel.textContent='Status';
+    form.appendChild(statusLabel);
+    const statusInput = document.createElement('select');
+    statusInput.setAttribute('name', 'statusEdit');
+    statusInput.setAttribute('id', 'statusEdit');
+    statusInput.setAttribute('required', '');
+    form.appendChild(statusInput);
+    statusInput.innerHTML='<option value="Not Done">Not Done</option><option value="Done">Done</option>';
+    //Submit button
+    const submit = document.createElement('button');
+    submit.setAttribute('type', 'submit');
+    submit.setAttribute('class', 'editTaskForm');
+    submit.textContent='Add';
+    form.appendChild(submit);
+};
+
+
+const renderFormTask = () => {
+    const inputs = document.querySelector('.inputs');
+    inputs.innerHTML='';
+
+    const form = document.createElement('form');
+    form.setAttribute('action', '""');
+    form.setAttribute('post', '""');
+    form.setAttribute('id', 'formTask');
+    inputs.appendChild(form);
+    //Title
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'title');
+    titleLabel.textContent='Title';
+    form.appendChild(titleLabel);
+    const titleInput = document.createElement('input');
+    titleInput.setAttribute('type', 'text');
+    titleInput.setAttribute('name', 'title');
+    titleInput.setAttribute('id', 'title');
+    titleInput.setAttribute('maxlength', '20');
+    titleInput.setAttribute('required', '');
+    form.appendChild(titleInput);
+    //Description
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.setAttribute('for', 'description');
+    descriptionLabel.textContent='Description';
+    form.appendChild(descriptionLabel);
+    const descriptionInput = document.createElement('textarea');
+    descriptionInput.setAttribute('name', 'description');
+    descriptionInput.setAttribute('id', 'description');
+    descriptionInput.setAttribute('cols', '30');
+    descriptionInput.setAttribute('rows', '10');
+    form.appendChild(descriptionInput);
+    //Due Date
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.setAttribute('for', 'dueDate');
+    dueDateLabel.textContent='Due date';
+    form.appendChild(dueDateLabel);
+    const dueDateInput = document.createElement('input');
+    dueDateInput.setAttribute('type', 'date');
+    dueDateInput.setAttribute('name', 'dueDate');
+    dueDateInput.setAttribute('id', 'dueDate');
+    form.appendChild(dueDateInput);
+    //Priority
+    const priorityLabel = document.createElement('label');
+    priorityLabel.setAttribute('for', 'priority');
+    priorityLabel.textContent='Priority';
+    form.appendChild(priorityLabel);
+    const priorityInput = document.createElement('select');
+    priorityInput.setAttribute('name', 'priority');
+    priorityInput.setAttribute('id', 'priority');
+    form.appendChild(priorityInput);
+    priorityInput.innerHTML='<option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option>';
+    //Submit button
+    const submit = document.createElement('button');
+    submit.setAttribute('type', 'submit');
+    submit.setAttribute('class', 'addTaskForm');
+    submit.textContent='Add';
+    form.appendChild(submit);
+};
+
+const renderFormFolder = () => {
+    const inputs = document.querySelector('.inputs');
+    inputs.innerHTML='';
+
+    const form = document.createElement('form');
+    form.setAttribute('action', '""');
+    form.setAttribute('post', '""');
+    form.setAttribute('id', 'formFolder');
+    inputs.appendChild(form);
+    //Folder's name
+    const folderLabel = document.createElement('label');
+    folderLabel.setAttribute('for', 'folderName');
+    folderLabel.textContent="Folder's Name";
+    form.appendChild(folderLabel);
+    const folderInput = document.createElement('input');
+    folderInput.setAttribute('type', 'text');
+    folderInput.setAttribute('name', 'folderName');
+    folderInput.setAttribute('id', 'folderName');
+    folderInput.setAttribute('maxlength', '20');
+    folderInput.setAttribute('required', '');
+    form.appendChild(folderInput);
+    //Submit button
+    const submit = document.createElement('button');
+    submit.setAttribute('type', 'submit');
+    submit.setAttribute('class', 'addFolderBtn');
+    submit.textContent='Add';
+    form.appendChild(submit);
+};
 
 
 

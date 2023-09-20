@@ -1,1 +1,3 @@
-//!!! MAKE SURE TO ERASE ATTRIBUTES AND PUT EVERYTHING BACK TO PREVIOUS STATE BECAUSE WE CHANGE THE ATTRIBUTES OR INNERHTML
+//!! to make the right index available for the edit logic (Listener) below
+
+//!!! MAKE SURE TO ERASE ATTRIBUTES AND PUT EVERYTHING BACK TO PREVIOUS STATE BECAUSE WE CHANGE THE ATTRIBUTES OR INNERHTML (is that useful with a logic that quit page when clicked add button?)
