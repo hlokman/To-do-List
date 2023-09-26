@@ -21,11 +21,20 @@ body {
 }
 #lists > button {
     height: 30px;
-    width: 100px;
+    width: 120px;
     align-self: center;
 }
 h3 {
     font-weight: 500
+}
+
+#projects {
+    display: grid;
+    gap: 7px;
+}
+
+#projects > div {
+    display: flex;
 }
 
 .folderBtn {
@@ -34,13 +43,31 @@ h3 {
     color: inherit;
     font-size: 20px;
     font-weight: 600;
+    margin-right: auto;
+}
+.removeFolderBtn {
+    margin-right: 20px;
+    background: none;
+    border: none;
+    color: inherit;
 }
 
+.addFolder {
+    margin-top: 20px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 20px;
+    color: inherit;
+    font-weight: 700;
+}
+.addFolder:hover {
+    background-color: rgb(221, 221, 221);
+}
 /**/
 #content {
     display: grid;
-    /*grid-template-rows: 1fr 8fr;*/
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr 8fr;
+    /*grid-template-rows: 1fr auto;*/
 }
 .header {
     display: flex;
@@ -48,8 +75,8 @@ h3 {
     align-items: center;
 }
 .folderContent {
-    padding-left: 40px;
-    border: 2px solid blue;
+    padding-left: 70px;
+    /*border: 2px solid blue;*/
     display: flex;
     flex-direction: column;
 }
@@ -61,11 +88,11 @@ h3 {
     display: grid;
     /*min(10px, 1fr) min(100px, 1fr) min(100px, 1fr) min(100px, 1fr) min(10px, 1fr) min(10px, 1fr);
     repeat(1, min(10px, 1fr)) repeat(1, min(10px, 1fr)) repeat(1, min(100px, 1fr)) repeat(1, min(100px, 1fr)) repeat(1, min(10px, 1fr)) repeat(1, min(10px, 1fr));*/
-    grid-template-columns: 10px 152px 90px 90px 20px 20px 20px;
+    grid-template-columns: 10px 290px 110px 90px 20px 20px 20px;
     grid-template-rows: 20px;
     gap: 60px;
+    margin-bottom: 10px;
 }
-
 .folderContent > div > button {
     /*temporary to see that they are buttons*/
     width: 25px;
@@ -74,29 +101,165 @@ h3 {
     color: inherit;
 }
 
+span.Low {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+}
+span.Medium {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: orange;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 12px;
+}
+span.High {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+}
+
 #notDone,
 #done,
 #see,
-#edit,
-#remove {
+#edit {
     width: 20px;
     height: 20px;
 }
+#remove {
+    height: 10px;
+    width: 10px;
+}
+
+.addTask {
+    margin-top: 20px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 20px;
+    color: inherit;
+    font-weight: 700;
+    padding: 5px 10px;
+}
+.addTask:hover {
+    background-color: rgb(221, 221, 221);
+}
 
 .inputs {
-    border: 2px solid green;
-    height: 400px;
-    width: 400px;
+    /*border: 2px solid green;*/
     display: flex;  
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: white;
+    height: 400px;
+    width: 450px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    border: 1px solid gray;
 }
-.test > div {
-    border: 2px solid blue;
+.inputs > div {
     text-align: center;
+}
+.inputs#inputFolder {
+    height: 100px;
+    width: 250px;
+}
+.inputs#details {
+    height: 350px;
+    width: 350px;
+}
+
+.mask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, 0.2);
+}
+
+form {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+input, label {
+    display: block;
+}
+form > input,
+form > textarea,
+form > select {
+    margin-bottom: 10px;
+}
+
+.formTaskBottom {
+    display: grid;
+    width: 300px;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 30px;
+    padding-left: 30px;
+}
+.formTaskBottom > div {
+    justify-self: center;
 }
 
 #formEdit {
-    border: 2px solid purple;
+    /*border: 2px solid purple;*/
+}
+.formEditBottom {
+    display: grid;
+    width: 350px;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 30px;
+}
+.formEditBottom > div {
+    justify-self: center;
+    
+}
+
+.addFolderBtn,
+.addTaskForm,
+.editTaskForm {
+    background: none;
+    border: none;
+    color: inherit;
+    font-weight: 700;
+}
+
+.warning {
+    font-style: italic;
+    font-weight: 700;
+    font-size: 20px;
+    opacity: 0.1;
+    margin-bottom: 15px;
+    align-items: center;
+    justify-content: center;
+}
+.folderContent > div.warning2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 200px;
+    font-size: 80px;
+    font-style: italic;
+    font-weight: 700;
+    opacity: 0.1;
 }
