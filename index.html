@@ -12,105 +12,21 @@
             <br>
             <div id="projects">
                 <h2>Projects</h2>
-                <div class="folder1">
-                    <button class="folderBtn" data-index-number="0">Folder 1</button>
-                    <ul>
-                        <li>sub1</li>
-                        <li>sub2</li>
-                        <li>sub3</li>
-                    </ul>
-                </div>
-                <div class="folder2">
-                    <button class="folderBtn" data-index-number="1">Folder 2</button>
-                    <ul>
-                        <li>sub1</li>
-                        <li>sub2</li>
-                        <li>sub3</li>
-                    </ul>
-                </div>
             </div>
-            <button class="addFolder">Add Folder</button>
-
-            <!--
-            <form action="" method="" id="formFolder">
-                <label for="folderName">Folder's Name</label>
-                <input type="text" name="folderName" id="folderName" required>
-
-                <button type="submit" class="addFolderBtn">Add</button>
-            </form>
-            -->
-
+            <button class="addFolder">Add a project</button>
         </div>
-
 
         <div id="content">
             <div class="header">
                 <h1><em>Wish it, Plan it, Do it!</em></h1>
             </div>
-            <div class="folderContent">
-                <!-- <h1>Folder 1</h1>
-                !--Library style--
-                <button class="addTask">Add</button> -->
-            </div>
+            <div class="folderContent"></div>
 
-            <div class="mask"></div>
-            <div class="inputs">
-                <!--
-                <div class="testInfo">
-                <h3>Description:</h3>
-                </div>
-                <div class="testdueDate">
-                    <h3>dueDate:</h3>
-                </div>
-                <div class="testpriority">
-                    <h3>Priority:</h3>
-                </div>
-                -->
-            </div>
-            
-            <!--
-            <form action="" method="" id="formEdit">
-                <label for="titleEdit">Title</label>
-                <input type="text" name="titleEdit" id="titleEdit" required maxlength="20">
-
-                <label for="descriptionEdit">Description</label>
-                <textarea name="descriptionEdit" id="descriptionEdit" cols="30" rows="10"></textarea>
-
-                <label for="dueDateEdit">Due date</label>
-                <input type="date" name="dueDateEdit" id="dueDateEdit">
-
-                <label for="priorityEdit">Priority</label>
-                <select name="priorityEdit" id="priorityEdit">
-                    <option value="high">High</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="low">Low</option>
-                </select>
-                <button type="submit" class="editTaskForm">Add</button>
-            </form>
-            -->
-
-            <!--
-            <form action="" method="" id="formTask">
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title" required maxlength="20">
-
-                <label for="description">Description</label>
-                <textarea name="description" id="description" cols="30" rows="10"></textarea>
-
-                <label for="dueDate">Due date</label>
-                <input type="date" name="dueDate" id="dueDate">
-
-                <label for="priority">Priority</label>
-                <select name="priority" id="priority">
-                    <option value="high">High</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="low">Low</option>
-                </select>
-                <button type="submit" class="addTaskForm">Add</button>
-            </form>
-            -->
-
+            <div class="mask" style="display: none;"></div>
+            <div class="inputs" style="display: none;"></div>
         </div>
+
+    </div>  
     <script src="main.js"></script>
 </body>
 </html>
