@@ -18,7 +18,7 @@ const renderFormEdit = () => {
     titleInput.setAttribute('type', 'text');
     titleInput.setAttribute('name', 'titleEdit');
     titleInput.setAttribute('id', 'titleEdit');
-    titleInput.setAttribute('maxlength', '40');
+    titleInput.setAttribute('maxlength', '21');
     titleInput.setAttribute('required', '');
     form.appendChild(titleInput);
     //Description
@@ -172,7 +172,7 @@ const renderFormFolder = () => {
     folderInput.setAttribute('type', 'text');
     folderInput.setAttribute('name', 'folderName');
     folderInput.setAttribute('id', 'folderName');
-    folderInput.setAttribute('maxlength', '30');
+    folderInput.setAttribute('maxlength', '21');
     folderInput.setAttribute('required', '');
     form.appendChild(folderInput);
     //Submit button

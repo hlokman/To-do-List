@@ -94,15 +94,16 @@ const displayController = (() => {
 
     //----eventListener to change activeFolder when folder clicked on lists + remove logic
     projects.addEventListener('click', (e) => {
-        if (e.target.className == 'folderBtn') {
+        if (e.target.id == 'project' || e.target.className == 'folderBtn') {
             activeFolder = folders[e.target.dataset.indexNumber];
             updates.screenUpdate(activeFolder);
+            
             console.log(activeFolder);
         };
 
         if (e.target.id == 'remove') {
             console.log(e.target);
-            folders.splice(e.target.parentNode.dataset.indexNumber, 1);
+            folders.splice(e.target.dataset.indexNumber, 1);
             activeFolder = folders[0];
             updates.screenUpdate(activeFolder);
             console.log(activeFolder);

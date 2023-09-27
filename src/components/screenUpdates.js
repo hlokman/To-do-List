@@ -6,6 +6,7 @@ const folderContent = document.querySelector('.folderContent');
 const projects = document.querySelector('#projects');
 const inputs = document.querySelector('.inputs');
 const mask = document.querySelector('.mask');
+const individualProject = document.getElementBy; 
 
 const updates = (() => {
     const screenUpdate = (activeFolder) => {
@@ -16,7 +17,12 @@ const updates = (() => {
             //LIST SIDE -> Shows all the general folders (ongoing)
             projects.innerHTML='';
             folders.forEach((item, index) => {
-                projects.innerHTML += `<div class="${item[0].folderName}"> <button class="folderBtn" data-index-number="${index}">${item[0].folderName}</button> <button class="removeFolderBtn" data-index-number="${index}"><img src="../src/style/redcross.svg" id="remove"></button></div>`
+                if (folders.indexOf(activeFolder) == index) { //to put 'class="activeFolder' to the right div
+                    projects.innerHTML += `<div id="project" class="activeFolder" data-index-number="${index}"> <button class="folderBtn" data-index-number="${index}">${item[0].folderName}</button> <button class="removeFolderBtn" data-index-number="${index}" id="remove"></button></div>`
+                } else {
+                    projects.innerHTML += `<div id="project" data-index-number="${index}"> <button class="folderBtn" data-index-number="${index}">${item[0].folderName}</button> <button class="removeFolderBtn" data-index-number="${index}" id="remove"></div>`
+                }
+                
             })
            
             //FOLDER CONTENT SIDE -> Shows for activeFolder (ok)
@@ -29,9 +35,9 @@ const updates = (() => {
                     let newDueDate = item.dueDate.replace(/-/g, '\/');
                     newDueDate = format(new Date(newDueDate), 'PP'); //To get the right format to display
                     if (item.check == 'Not Done') {
-                        folderContent.innerHTML += `<div data-index-number="${index}"><button class="checkBtn" data-index-number="${index}"><img src="../src/style/round-svgrepo-com.svg" id="notDone"></button><span>${item.title}</span><span> ${newDueDate}</span><span class="${item.priority}"> ${item.priority}</span><button data-index-number="${index}" class="eyeBtn"><img src="../src/style/eye.svg" id="see"></button><button data-index-number="${index}" class="editBtn"><img src="../src/style/edit.svg" id="edit"></button><button data-index-number="${index}"><img src="../src/style/redcross.svg" id="remove"></button></div>`
+                        folderContent.innerHTML += `<div data-index-number="${index}"><button class="checkBtn" data-index-number="${index}"><img src="../src/style/round-svgrepo-com.svg" id="notDone"></button><span>${item.title}</span><span> ${newDueDate}</span><span class="${item.priority}"> ${item.priority}</span><button data-index-number="${index}" class="eyeBtn"><img src="../src/style/eye.svg" id="see"></button><button data-index-number="${index}" class="editBtn"><img src="../src/style/edit.svg" id="edit"></button><button data-index-number="${index}" class="removeTaskBtn" id="remove"></button></div>`
                     } else if (item.check == 'Done') {
-                        folderContent.innerHTML += `<div data-index-number="${index}"><button class="checkBtn" data-index-number="${index}"><img src="../src/style/done-ring-round-svgrepo-com.svg" id="done"></button><span>${item.title}</span><span> ${newDueDate}</span><span class="${item.priority}"> ${item.priority}</span><button data-index-number="${index}"class="eyeBtn"><img src="../src/style/eye.svg" id="see"></button><button data-index-number="${index}" class="editBtn"><img src="../src/style/edit.svg" id="edit"></button><button data-index-number="${index}"><img src="../src/style/redcross.svg" id="remove"></button></div>`
+                        folderContent.innerHTML += `<div data-index-number="${index}"><button class="checkBtn" data-index-number="${index}"><img src="../src/style/done-ring-round-svgrepo-com.svg" id="done"></button><span>${item.title}</span><span> ${newDueDate}</span><span class="${item.priority}"> ${item.priority}</span><button data-index-number="${index}"class="eyeBtn"><img src="../src/style/eye.svg" id="see"></button><button data-index-number="${index}" class="editBtn"><img src="../src/style/edit.svg" id="edit"></button><button data-index-number="${index}" class="removeTaskBtn" id="remove"></button></div>`
                     } 
                 }
             });
