@@ -17,17 +17,18 @@ let folders = [[{folderName: 'Get fit'},{title: 'Make dinner', description: 'To 
 [{folderName: 'Side projects'}, {title: 'Fix my bike', description: 'Finish the restoration of my old motorcycle', dueDate: '2023-12-01', priority: 'Low', check: 'Not Done'},
 {title: 'Strengthen the foundations of the shack', description: 'The foundations are not strong enough to hold the structure', dueDate: '2024-01-01', priority: 'High', check: 'Not Done'}]];
 
+let activeFolder = folders[0];
+let getActiveFolder = () => activeFolder;
 /*console.log(folders);
 console.log(folders[0][1].title);*/
 
 
 //--DISPLAY CONTROLLER (?)
 const displayController = (() => {
-    let activeFolder = folders[0];
-    let getActiveFolder = () => activeFolder;
+
 
     //----------screen update
-    updates.screenUpdate(activeFolder);
+    updates.screenUpdate();
 
 
     //------------eventListener to change the check status + remove trigger + edit trigger
@@ -35,22 +36,22 @@ const displayController = (() => {
         //console.log(e.target.parentNode.dataset.indexNumber)
         if (e.target.id == 'notDone') {
             activeFolder[e.target.parentNode.dataset.indexNumber].check = 'Done';
-            updates.screenUpdate(activeFolder);
+            updates.screenUpdate();
         } else if (e.target.id == 'done') {
             activeFolder[e.target.parentNode.dataset.indexNumber].check = 'Not Done';
-            updates.screenUpdate(activeFolder);
+            updates.screenUpdate();
         }
 
         if (e.target.id == 'see') {
             console.log('see trigger');
             console.log(e.target.parentNode.dataset.indexNumber);
-            updates.screenUpdateSee(e, activeFolder);
+            updates.screenUpdateSee(e);
 
         }
 
         if (e.target.id == 'edit') {
             renderFormEdit();
-            updates.screenUpdateEdit(e, activeFolder);
+            updates.screenUpdateEdit(e);
 
             //EDIT LOGIC
             formEdit.addEventListener('submit', (e) => {
@@ -58,7 +59,7 @@ const displayController = (() => {
                 //console.log(e.currentTarget.titleEdit.dataset.indexNumber)
                 const editTask = toDoFactory((e.currentTarget.titleEdit.value), (e.currentTarget.descriptionEdit.value), (e.currentTarget.dueDateEdit.value), (e.currentTarget.priorityEdit.value), (e.currentTarget.statusEdit.value));
                 activeFolder.splice((e.currentTarget.titleEdit.dataset.indexNumber), 1, editTask);
-                updates.screenUpdate(activeFolder);
+                updates.screenUpdate();
                 updates.invisibleOverlay();
 
             })
@@ -66,7 +67,7 @@ const displayController = (() => {
 
         if (e.target.id == 'remove') {
             activeFolder.splice((e.target.parentNode.dataset.indexNumber), 1);
-            updates.screenUpdate(activeFolder);
+            updates.screenUpdate();
             console.log(activeFolder);
         }
 
@@ -82,7 +83,7 @@ const displayController = (() => {
                 console.log(e.currentTarget.title.value);
                 const newTask = toDoFactory((e.currentTarget.title.value), (e.currentTarget.description.value), (e.currentTarget.dueDate.value), (e.currentTarget.priority.value), 'Not Done'/*, undefined*/);
                 activeFolder.push(newTask);
-                updates.screenUpdate(activeFolder);
+                updates.screenUpdate();
                 formTask.reset();
                 updates.invisibleOverlay();
             })
@@ -95,7 +96,7 @@ const displayController = (() => {
     projects.addEventListener('click', (e) => {
         if (e.target.id == 'project' || e.target.className == 'folderBtn') {
             activeFolder = folders[e.target.dataset.indexNumber];
-            updates.screenUpdate(activeFolder);
+            updates.screenUpdate();
             
             console.log(activeFolder);
         };
@@ -104,7 +105,7 @@ const displayController = (() => {
             console.log(e.target);
             folders.splice(e.target.dataset.indexNumber, 1);
             activeFolder = folders[0];
-            updates.screenUpdate(activeFolder);
+            updates.screenUpdate();
             console.log(activeFolder);
         }
     });
@@ -127,7 +128,7 @@ const displayController = (() => {
                     folders.push(newFolder);
                     activeFolder = folders[0]
                     //Might include below code into screenUpdate or other function that create the DOM
-                    updates.screenUpdate(activeFolder);
+                    updates.screenUpdate();
                     console.log(activeFolder);
                     updates.invisibleOverlay();
                 } else {
@@ -135,7 +136,7 @@ const displayController = (() => {
                     const newFolder = [{folderName: e.currentTarget.folderName.value}];
                     folders.push(newFolder);
                     //Might include below code into screenUpdate or other function that create the DOM
-                    updates.screenUpdate(activeFolder);
+                    updates.screenUpdate();
                     console.log(activeFolder);
                     updates.invisibleOverlay();
                 }
@@ -153,4 +154,4 @@ const addElement = (() => {
 
 /*console.log(displayController.getActiveFolder())*/
 
-export { folders, displayController }
+export { folders, displayController, activeFolder }

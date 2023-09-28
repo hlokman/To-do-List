@@ -1,4 +1,4 @@
-import { folders } from './eventListeners.JS';
+import { folders, activeFolder } from './eventListeners.JS';
 import { compareAsc, format } from 'date-fns';
 
 
@@ -9,7 +9,7 @@ const mask = document.querySelector('.mask');
 const individualProject = document.getElementBy; 
 
 const updates = (() => {
-    const screenUpdate = (activeFolder) => {
+    const screenUpdate = () => {
         if (folders.length == 0) { //FOR THE CASE WHERE THE OBJECT IS EMPTY (all objects removed)
             projects.innerHTML='<div class="warning"> Please add a project</div>';
             folderContent.innerHTML= '<div class="warning2">No Project</div>';
@@ -47,7 +47,7 @@ const updates = (() => {
     
     };
     
-    const screenUpdateSee = (event, activeFolder) => {
+    const screenUpdateSee = (event) => {
         inputs.innerHTML = '';
         inputs.innerHTML += `<div class="testInfo"><h3>Description:</h3><p>${activeFolder[event.target.parentNode.dataset.indexNumber].description}</p></div>` 
         + `<div class="testdueDate"><h3>dueDate:</h3><p>${activeFolder[event.target.parentNode.dataset.indexNumber].dueDate}</p></div>` 
@@ -57,7 +57,7 @@ const updates = (() => {
         inputs.setAttribute('id', 'details');
     };
     
-    const screenUpdateEdit = (event, activeFolder) => {
+    const screenUpdateEdit = (event) => {
         inputs.style.display = '';
         mask.style.display = '';
         const formEdit = document.querySelector('#formEdit'); //Scope logic + var cannot be created before the form being created
