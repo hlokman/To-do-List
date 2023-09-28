@@ -3,6 +3,5 @@ import { displayController, folders } from './components/eventListeners.JS';
 import { toDoFactory } from './components/factoryFunction';
 
 if (localStorage.getItem('user') == null) {
-
+    const test = {}
 }
-//fzefergregre
