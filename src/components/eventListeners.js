@@ -1,7 +1,7 @@
 import {renderFormEdit, renderFormFolder, renderFormTask} from './renderForms';
 import { screenUpdate, screenUpdateSee, screenUpdateEdit, invisibleOverlay, visibleOverlay } from './screenUpdates';
 import { toDoFactory } from './factoryFunction';
-import { folders, activeFolder } from '../index';
+import { folders, activeFolder, storeProjects } from '../index';
 
 
 const folderContent = document.querySelector('.folderContent');
@@ -32,9 +32,11 @@ const displayController = () => {
         //console.log(e.target.parentNode.dataset.indexNumber)
         if (e.target.id == 'notDone') {
             activeFolder[e.target.parentNode.dataset.indexNumber].check = 'Done';
+            storeProjects();
             screenUpdate();
         } else if (e.target.id == 'done') {
             activeFolder[e.target.parentNode.dataset.indexNumber].check = 'Not Done';
+            storeProjects();
             screenUpdate();
         }
 
@@ -55,6 +57,7 @@ const displayController = () => {
                 //console.log(e.currentTarget.titleEdit.dataset.indexNumber)
                 const editTask = toDoFactory((e.currentTarget.titleEdit.value), (e.currentTarget.descriptionEdit.value), (e.currentTarget.dueDateEdit.value), (e.currentTarget.priorityEdit.value), (e.currentTarget.statusEdit.value));
                 activeFolder.splice((e.currentTarget.titleEdit.dataset.indexNumber), 1, editTask);
+                storeProjects()
                 screenUpdate();
                 invisibleOverlay();
 
@@ -63,6 +66,7 @@ const displayController = () => {
 
         if (e.target.id == 'remove') {
             activeFolder.splice((e.target.parentNode.dataset.indexNumber), 1);
+            storeProjects()
             screenUpdate();
             console.log(activeFolder);
         }
@@ -79,6 +83,7 @@ const displayController = () => {
                 console.log(e.currentTarget.title.value);
                 const newTask = toDoFactory((e.currentTarget.title.value), (e.currentTarget.description.value), (e.currentTarget.dueDate.value), (e.currentTarget.priority.value), 'Not Done'/*, undefined*/);
                 activeFolder.push(newTask);
+                storeProjects();
                 screenUpdate();
                 formTask.reset();
                 invisibleOverlay();
@@ -101,6 +106,7 @@ const displayController = () => {
             console.log(e.target);
             folders.splice(e.target.dataset.indexNumber, 1);
             activeFolder = folders[0];
+            storeProjects();
             screenUpdate();
             console.log(activeFolder);
         }
@@ -122,7 +128,8 @@ const displayController = () => {
                     //console.log(e.currentTarget.folderName.value);
                     const newFolder = [{folderName: e.currentTarget.folderName.value}];
                     folders.push(newFolder);
-                    activeFolder = folders[0]
+                    activeFolder = folders[0];
+                    storeProjects();
                     //Might include below code into screenUpdate or other function that create the DOM
                     screenUpdate();
                     console.log(activeFolder);
@@ -131,6 +138,7 @@ const displayController = () => {
                     e.preventDefault();
                     const newFolder = [{folderName: e.currentTarget.folderName.value}];
                     folders.push(newFolder);
+                    storeProjects();
                     //Might include below code into screenUpdate or other function that create the DOM
                     screenUpdate();
                     console.log(activeFolder);

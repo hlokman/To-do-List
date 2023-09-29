@@ -6,8 +6,10 @@ import { toDoFactory } from './components/factoryFunction';
 let folders = [];
 
 
-
-
+//To use Web Storage API
+function storeProjects() {
+    window.localStorage.setItem('user', JSON.stringify(folders))
+}
 
 if (localStorage.getItem('user') == null) {
     const project1 = [{folderName: 'Get fit'},{title: 'Make dinner', description: 'To make (healthy) dinner at 19pm', dueDate: '2023-11-12', priority: 'Medium', check: 'Not Done'},
@@ -18,7 +20,9 @@ if (localStorage.getItem('user') == null) {
     folders.push(project1);
     folders.push(project2);
 
-} 
+} else {
+    folders = JSON.parse(window.localStorage.getItem('user'));
+}
 
 let activeFolder = folders[0];
 
@@ -28,4 +32,4 @@ displayController();
 //console.log(activeFolder)
 console.log(folders.indexOf(activeFolder))
 
-export {folders, activeFolder}
+export {folders, activeFolder, storeProjects}
