@@ -14,7 +14,7 @@ const screenUpdate = () => {
         projects.innerHTML='<div class="warning"> Please add a project</div>';
         folderContent.innerHTML= '<div class="warning2">No Project</div>';
     } else {
-        //LIST SIDE -> Shows all the general folders (ongoing)
+        //LIST SIDE -> Shows all the general folders
         projects.innerHTML='';
         folders.forEach((item, index) => {
             if (folders.indexOf(activeFolder) == index) { //to put 'class="activeFolder' to the right div
@@ -25,7 +25,7 @@ const screenUpdate = () => {
             
         })
         
-        //FOLDER CONTENT SIDE -> Shows for activeFolder (ok)
+        //FOLDER CONTENT SIDE -> Shows for activeFolder
         folderContent.innerHTML='';
         folderContent.innerHTML += `<h1>${activeFolder[0].folderName}</h1>`;
         activeFolder.forEach( (item, index) => {
@@ -42,10 +42,10 @@ const screenUpdate = () => {
             }
         });
         folderContent.innerHTML += '<button class="addTask">Add a task</button>';
-        console.log(activeFolder);
     };
 
 };
+
 
 const screenUpdateSee = (event) => {
     inputs.innerHTML = '';
@@ -57,6 +57,7 @@ const screenUpdateSee = (event) => {
     inputs.setAttribute('id', 'details');
 };
 
+
 const screenUpdateEdit = (event) => {
     inputs.style.display = '';
     mask.style.display = '';
@@ -67,14 +68,11 @@ const screenUpdateEdit = (event) => {
     const priorityEdit = document.querySelector('#priorityEdit');
     const statusEdit = document.querySelector('#statusEdit');
 
-    console.log('edit trigger');
-    console.log(event.target.parentNode.dataset.indexNumber);
     titleEdit.setAttribute('value', `${activeFolder[event.target.parentNode.dataset.indexNumber].title}`);
-    titleEdit.setAttribute('data-index-number', `${event.target.parentNode.dataset.indexNumber}`); //!! to make the right index available for the edit logic (Listener) below
+    titleEdit.setAttribute('data-index-number', `${event.target.parentNode.dataset.indexNumber}`); 
     descriptionEdit.innerHTML = `${activeFolder[event.target.parentNode.dataset.indexNumber].description}`;
     dateEdit.setAttribute('value', `${activeFolder[event.target.parentNode.dataset.indexNumber].dueDate}`);
-    //formPriority.setAttribute('value', `${activeFolder[e.target.parentNode.dataset.indexNumber].priority}`);
-    //!!! MAKE SURE TO ERASE ATTRIBUTES AND PUT EVERYTHING BACK TO PREVIOUS STATE BECAUSE WE CHANGE THE ATTRIBUTES OR INNERHTML (is that useful with a logic that quit page when clicked add button?)
+
     if (activeFolder[event.target.parentNode.dataset.indexNumber].priority == 'Low') {
         priorityEdit.innerHTML='<option value="High">High</option><option value="Medium">Medium</option><option value="Low" selected>Low</option>';
     } else if (activeFolder[event.target.parentNode.dataset.indexNumber].priority == 'Medium') {
@@ -82,7 +80,7 @@ const screenUpdateEdit = (event) => {
     } else if (activeFolder[event.target.parentNode.dataset.indexNumber].priority == 'High') {
         priorityEdit.innerHTML='<option value="High" selected>High</option><option value="Medium">Medium</option><option value="Low">Low</option>';
     };
-    //Same logic than the if above but with the status
+    //Same logic than the if() above but with the status
     if (activeFolder[event.target.parentNode.dataset.indexNumber].check == 'Done') {
         statusEdit.innerHTML='<option value="Not Done">Not Done</option><option value="Done" selected>Done</option>';
     } else if (activeFolder[event.target.parentNode.dataset.indexNumber].check == 'Not Done') {
@@ -90,18 +88,17 @@ const screenUpdateEdit = (event) => {
     };
 };
 
+
 const invisibleOverlay = () => {
     inputs.style.display = 'none';
     mask.style.display = 'none';
 };
 
+
 const visibleOverlay = () => {
     inputs.style.display = '';
     mask.style.display = '';
 };
-
-
-
 
 
 
