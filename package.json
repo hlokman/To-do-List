@@ -1,7 +1,7 @@
 {
   "name": "to-do-list",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple To-Do List app created with HTML, CSS, JS and ES6 modules using webpack.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
