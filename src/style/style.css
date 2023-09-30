@@ -82,7 +82,7 @@ h3 {
     width: 12px;
     align-self: center;
     content:"";
-    background: url(./redcross.svg);
+    background: url(redcross.svg);
     background-size: 100%;
 }
 
@@ -140,7 +140,7 @@ h3 {
     width: 12px;
     align-self: center;
     content:"";
-    background: url(./redcross.svg);
+    background: url(redcross.svg);
     background-size: 100%;
 }
 
@@ -182,6 +182,27 @@ span.High {
 #edit {
     width: 20px;
     height: 20px;
+}
+
+#notDone {
+    
+    background: url(round-svgrepo-com.svg);
+    background-size: 100%;
+}
+#done {
+    
+    background: url(done-ring-round-svgrepo-com.svg);
+    background-size: 100%;
+}
+#see {
+    
+    background: url(eye.svg);
+    background-size: 100%; 
+}
+#edit {
+    
+    background: url(edit.svg);
+    background-size: 100%; 
 }
 
 .addTask {

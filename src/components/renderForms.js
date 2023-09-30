@@ -48,6 +48,7 @@ const renderFormEdit = () => {
     dueDateInput.setAttribute('type', 'date');
     dueDateInput.setAttribute('name', 'dueDateEdit');
     dueDateInput.setAttribute('id', 'dueDateEdit');
+    dueDateInput.setAttribute('required', '');
     subDiv1.appendChild(dueDateInput);
     //Priority
     const subDiv2 = document.createElement('div');
@@ -132,6 +133,7 @@ const renderFormTask = () => {
     dueDateInput.setAttribute('type', 'date');
     dueDateInput.setAttribute('name', 'dueDate');
     dueDateInput.setAttribute('id', 'dueDate');
+    dueDateInput.setAttribute('required', '');
     subDiv1.appendChild(dueDateInput);
     //Priority
     const subDiv2 = document.createElement('div');
