@@ -29,8 +29,6 @@ const displayController = () => {
         }
 
         if (e.target.id == 'see') {
-            console.log('see trigger');
-            console.log(e.target.parentNode.dataset.indexNumber);
             screenUpdateSee(e);
         }
 
@@ -53,7 +51,6 @@ const displayController = () => {
             activeFolder.splice((e.target.parentNode.dataset.indexNumber), 1);
             storeProjects()
             screenUpdate();
-            console.log(activeFolder);
         }
 
         //TASK LOGIC
@@ -65,7 +62,6 @@ const displayController = () => {
             //Task's Form logic
             formTask.addEventListener('submit', (e) => {
                 e.preventDefault();
-                console.log(e.currentTarget.title.value);
                 const newTask = toDoFactory((e.currentTarget.title.value), (e.currentTarget.description.value), (e.currentTarget.dueDate.value), (e.currentTarget.priority.value), 'Not Done'/*, undefined*/);
                 activeFolder.push(newTask);
                 storeProjects();
@@ -83,17 +79,13 @@ const displayController = () => {
         if (e.target.id == 'project' || e.target.className == 'folderBtn') {
             activeFolder = folders[e.target.dataset.indexNumber];
             screenUpdate();
-
-            console.log(activeFolder);
         };
 
         if (e.target.id == 'remove') {
-            console.log(e.target);
             folders.splice(e.target.dataset.indexNumber, 1);
             activeFolder = folders[0];
             storeProjects();
             screenUpdate();
-            console.log(activeFolder);
         }
     });
 
@@ -115,18 +107,14 @@ const displayController = () => {
                     folders.push(newFolder);
                     activeFolder = folders[0];
                     storeProjects();
-                    //Might include below code into screenUpdate or other function that create the DOM
                     screenUpdate();
-                    console.log(activeFolder);
                     invisibleOverlay();
                 } else {
                     e.preventDefault();
                     const newFolder = [{folderName: e.currentTarget.folderName.value}];
                     folders.push(newFolder);
                     storeProjects();
-                    //Might include below code into screenUpdate or other function that create the DOM
                     screenUpdate();
-                    console.log(activeFolder);
                     invisibleOverlay();
                 }
 
